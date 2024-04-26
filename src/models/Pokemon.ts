@@ -8,9 +8,9 @@ export interface PokemonData {
 }
 // class Pokemon 정의 일일히 다른 포켓몬 데이터 변수를 작성할 필요x.
 class Pokemon {
-  private id: number;
-  private name: string;
-  private type: string;
+  public id: number;
+  public name: string;
+  public type: string;
 
   constructor(id: number, name: string, type: string) {
     this.id = id;
