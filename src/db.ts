@@ -1,9 +1,9 @@
-import mysql from "mysql";
+import mysql from "mysql2";
 
 const connection = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "153123",
+  password: "1234",
   database: "poketmon_database",
 });
 
