@@ -3,7 +3,7 @@ import mysql from "mysql";
 const connection = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "153123#",
+  password: "153123",
   database: "poketmon_database",
 });
 
