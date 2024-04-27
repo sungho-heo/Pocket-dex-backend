@@ -1,28 +1,47 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getAllPokemon = void 0;
-// poketmon db data get module
-const db_1 = __importDefault(require("../db"));
-const getAllPokemon = () => {
-    return new Promise((resolve, reject) => {
-        db_1.default.query("SELECT * FROM poketmon", (err, results) => {
-            if (err) {
-                reject(err);
-                return;
+exports.PokemonService = exports.Pokemon = void 0;
+const axios_1 = __importDefault(require("axios"));
+// class Pokemon 정의 일일히 다른 포켓몬 데이터 변수를 작성할 필요x.
+class Pokemon {
+    constructor(id, name, type) {
+        this.id = id;
+        this.name = name;
+        this.type = type;
+    }
+}
+exports.Pokemon = Pokemon;
+class PokemonService {
+    static getAllPokemon() {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const response = yield axios_1.default.get("https://pokeapi.co/api/v2/pokemon");
+                const pokemons = response.data.results.map((pokemon) => {
+                    return {
+                        id: pokemon.id,
+                        name: pokemon.name,
+                        type: pokemon.type,
+                    };
+                });
+                return pokemons;
             }
-            // Pokemon은 리스트형태의 데이터 타입을 갖지만 안에 데이터의 경우 number와 string 데이터를 받아오기에 any타입을 설정함.
-            const pokemonList = results.map((row) => {
-                return {
-                    id: row.id,
-                    name: row.name,
-                    type: row.type,
-                };
-            });
-            resolve(pokemonList);
+            catch (error) {
+                console.error("Error fetching Pokemon:", error);
+                throw error;
+            }
         });
-    });
-};
-exports.getAllPokemon = getAllPokemon;
+    }
+}
+exports.PokemonService = PokemonService;

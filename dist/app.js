@@ -19,7 +19,7 @@ const PORT = process.env.PORT || 3000;
 app.get("/api/pokemon", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         // db에서 받아온 포켓몬 데이터 가져오기
-        const poketmon = yield (0, Pokemon_1.getAllPokemon)();
+        const poketmon = yield Pokemon_1.PokemonService.getAllPokemon();
         // 가져온 데이터 보내기
         res.json(poketmon);
     }
@@ -29,5 +29,5 @@ app.get("/api/pokemon", (req, res) => __awaiter(void 0, void 0, void 0, function
     }
 }));
 app.listen(PORT, () => {
-    console.log("Server is running on port ${PORT} ");
+    console.log(`✅ Server running: http://localhost:${PORT}`);
 });
