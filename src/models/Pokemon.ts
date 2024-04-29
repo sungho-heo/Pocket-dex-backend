@@ -23,14 +23,18 @@ class PokemonService {
   static async getAllPokemon(): Promise<PokemonData[]> {
     try {
       const response = await axios.get("https://pokeapi.co/api/v2/pokemon");
-      const pokemons: PokemonData[] = response.data.results.map(
-        (pokemon: any) => {
-          return {
-            id: pokemon.id,
-            name: pokemon.name,
-            type: pokemon.type,
+      const pokemons: PokemonData[] = await Promise.all(
+        response.data.results.map(async (pokemon: any) => {
+          const detailResponse = await axios.get(pokemon.url);
+          const pokemonDetail: PokemonData = {
+            id: detailResponse.data.id,
+            name: detailResponse.data.name,
+            type: detailResponse.data.types
+              .map((type: any) => type.type.name)
+              .join(", "),
           };
-        }
+          return pokemonDetail;
+        })
       );
       return pokemons;
     } catch (error) {

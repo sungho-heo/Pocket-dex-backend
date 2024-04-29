@@ -28,13 +28,17 @@ class PokemonService {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const response = yield axios_1.default.get("https://pokeapi.co/api/v2/pokemon");
-                const pokemons = response.data.results.map((pokemon) => {
-                    return {
-                        id: pokemon.id,
-                        name: pokemon.name,
-                        type: pokemon.type,
+                const pokemons = yield Promise.all(response.data.results.map((pokemon) => __awaiter(this, void 0, void 0, function* () {
+                    const detailResponse = yield axios_1.default.get(pokemon.url);
+                    const pokemonDetail = {
+                        id: detailResponse.data.id,
+                        name: detailResponse.data.name,
+                        type: detailResponse.data.types
+                            .map((type) => type.type.name)
+                            .join(", "),
                     };
-                });
+                    return pokemonDetail;
+                })));
                 return pokemons;
             }
             catch (error) {
