@@ -15,4 +15,11 @@ router.get("/pokemon", async (req: Request, res: Response) => {
   }
 });
 
+// router.get("/pokemon/:id", async (req: Request, res: Response) => {
+//   const id: number = parseInt(req.params.id);
+//   try {
+
+//   }
+// })
+
 export default router;

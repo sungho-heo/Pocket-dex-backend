@@ -25,7 +25,9 @@ class Pokemon {
 class PokemonService {
   static async getAllPokemon(): Promise<PokemonData[]> {
     try {
-      const response = await axios.get("https://pokeapi.co/api/v2/pokemon");
+      const response = await axios.get(
+        "https://pokeapi.co/api/v2/pokemon?limit=100"
+      );
       const pokemons: PokemonData[] = await Promise.all(
         response.data.results.map(async (pokemon: any) => {
           // 포켓몬 api데이터에 각 포켓몬의 상세한 데이터는 url데이터에 파고 들어가야함.
