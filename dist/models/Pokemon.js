@@ -28,17 +28,14 @@ class PokemonService {
     static getAllPokemon() {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const response = yield axios_1.default.get("https://pokeapi.co/api/v2/pokemon", {
-                    params: {
-                        language: "ko",
-                    },
-                });
+                const response = yield axios_1.default.get("https://pokeapi.co/api/v2/pokemon?limit=100");
                 const pokemons = yield Promise.all(response.data.results.map((pokemon) => __awaiter(this, void 0, void 0, function* () {
                     // 포켓몬 api데이터에 각 포켓몬의 상세한 데이터는 url데이터에 파고 들어가야함.
                     const detailResponse = yield axios_1.default.get(pokemon.url);
+                    const id = detailResponse.data.id;
                     const pokemonDetail = {
-                        id: detailResponse.data.id,
-                        sprites: detailResponse.data.sprites.other.home,
+                        id: id,
+                        sprites: detailResponse.data.sprites.front_default,
                         name: detailResponse.data.name,
                         // 포켓몬 타입은 여러개가 존재해서 여러개 일때 ,를 붙여서 옆에 또다른 타입을 넣어줌.
                         type: detailResponse.data.types

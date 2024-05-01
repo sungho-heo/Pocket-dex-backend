@@ -34,7 +34,7 @@ class PokemonService {
           const detailResponse = await axios.get(pokemon.url);
           const pokemonDetail: PokemonData = {
             id: detailResponse.data.id,
-            sprites: detailResponse.data.sprites.other.home,
+            sprites: detailResponse.data.sprites.front_default,
             name: detailResponse.data.name,
             // 포켓몬 타입은 여러개가 존재해서 여러개 일때 ,를 붙여서 옆에 또다른 타입을 넣어줌.
             type: detailResponse.data.types
