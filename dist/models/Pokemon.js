@@ -16,11 +16,11 @@ exports.PokemonService = exports.Pokemon = void 0;
 const axios_1 = __importDefault(require("axios"));
 // class Pokemon 정의 일일히 다른 포켓몬 데이터 변수를 작성할 필요x.
 class Pokemon {
-    constructor(id, name, type, sprites) {
+    constructor(id, name, type, imageUrl) {
         this.id = id;
         this.name = name;
         this.type = type;
-        this.sprites = sprites;
+        this.imageUrl = imageUrl;
     }
 }
 exports.Pokemon = Pokemon;
@@ -32,10 +32,9 @@ class PokemonService {
                 const pokemons = yield Promise.all(response.data.results.map((pokemon) => __awaiter(this, void 0, void 0, function* () {
                     // 포켓몬 api데이터에 각 포켓몬의 상세한 데이터는 url데이터에 파고 들어가야함.
                     const detailResponse = yield axios_1.default.get(pokemon.url);
-                    const id = detailResponse.data.id;
                     const pokemonDetail = {
-                        id: id,
-                        sprites: detailResponse.data.sprites.front_default,
+                        id: detailResponse.data.id,
+                        imageUrl: detailResponse.data.sprites.front_default,
                         name: detailResponse.data.name,
                         // 포켓몬 타입은 여러개가 존재해서 여러개 일때 ,를 붙여서 옆에 또다른 타입을 넣어줌.
                         type: detailResponse.data.types

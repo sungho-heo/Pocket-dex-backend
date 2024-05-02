@@ -1,24 +1,25 @@
 import axios from "axios";
+import connection from "../db";
 
 // type config
 export interface PokemonData {
   id: number;
   name: string;
   type: string;
-  sprites: string;
+  imageUrl: string;
 }
 // class Pokemon 정의 일일히 다른 포켓몬 데이터 변수를 작성할 필요x.
 class Pokemon {
   public id: number;
   public name: string;
   public type: string;
-  public sprites: string;
+  public imageUrl: string;
 
-  constructor(id: number, name: string, type: string, sprites: string) {
+  constructor(id: number, name: string, type: string, imageUrl: string) {
     this.id = id;
     this.name = name;
     this.type = type;
-    this.sprites = sprites;
+    this.imageUrl = imageUrl;
   }
 }
 
@@ -34,7 +35,7 @@ class PokemonService {
           const detailResponse = await axios.get(pokemon.url);
           const pokemonDetail: PokemonData = {
             id: detailResponse.data.id,
-            sprites: detailResponse.data.sprites.front_default,
+            imageUrl: detailResponse.data.sprites.front_default,
             name: detailResponse.data.name,
             // 포켓몬 타입은 여러개가 존재해서 여러개 일때 ,를 붙여서 옆에 또다른 타입을 넣어줌.
             type: detailResponse.data.types
@@ -51,5 +52,4 @@ class PokemonService {
     }
   }
 }
-
 export { Pokemon, PokemonService };
