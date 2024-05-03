@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PokemonService = exports.Pokemon = void 0;
 const axios_1 = __importDefault(require("axios"));
+const db_1 = __importDefault(require("../db"));
 // class Pokemon 정의 일일히 다른 포켓몬 데이터 변수를 작성할 필요x.
 class Pokemon {
     constructor(id, name, type, imageUrl) {
@@ -29,6 +30,7 @@ class PokemonService {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const response = yield axios_1.default.get("https://pokeapi.co/api/v2/pokemon?limit=100");
+                const connection = yield (0, db_1.default)();
                 const pokemons = yield Promise.all(response.data.results.map((pokemon) => __awaiter(this, void 0, void 0, function* () {
                     // 포켓몬 api데이터에 각 포켓몬의 상세한 데이터는 url데이터에 파고 들어가야함.
                     const detailResponse = yield axios_1.default.get(pokemon.url);
@@ -41,6 +43,16 @@ class PokemonService {
                             .map((type) => type.type.name)
                             .join(", "),
                     };
+                    const [rows] = yield connection.execute("SELECT COUNT(*) AS count FROM pokemons WHERE name=?", [pokemonDetail.name]);
+                    const count = rows[0].count;
+                    if (count === 0) {
+                        yield connection.execute("INSERT INTO pokemons (id,name, type, imageUrl) VALUES (?, ?,? ,?)", [
+                            pokemonDetail.id,
+                            pokemonDetail.name,
+                            pokemonDetail.type,
+                            pokemonDetail.imageUrl,
+                        ]);
+                    }
                     return pokemonDetail;
                 })));
                 return pokemons;
