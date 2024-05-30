@@ -6,7 +6,7 @@ import User from "../models/User";
 const router = express.Router();
 
 // join route
-router.post("/join", async (req, res) => {
+router.post("/signup", async (req, res) => {
   const { nickname, email, password } = req.body;
   try {
     let user = await User.findOne({ email });

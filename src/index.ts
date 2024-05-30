@@ -12,6 +12,9 @@ app.use(cors());
 app.use(express.json());
 app.use(morgan("dev")); // Morgan 미들웨어 설정
 
+// 라우터
+app.use("/api/auth", authRoutes);
+
 // Connect to MongoDB
 mongoose
   .connect("mongodb://localhost:27017/pokemon-auth")
