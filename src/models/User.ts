@@ -1,8 +1,15 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 
+// user type
+interface UserType {
+  nickname: string;
+  email: string;
+  password: string;
+}
+
 // 스키마 정의
-const UserSchema = new mongoose.Schema({
+const UserSchema = new mongoose.Schema<UserType>({
   nickname: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
@@ -17,5 +24,5 @@ UserSchema.pre("save", async function (next) {
 });
 
 // 데이터베이스 모델생성.
-const User = mongoose.model("User", UserSchema);
+const User = mongoose.model<UserType>("User", UserSchema);
 export default User;

@@ -5,7 +5,7 @@ import User from "../models/User";
 
 const router = express.Router();
 
-// join route
+// signup route
 router.post("/signup", async (req, res) => {
   const { nickname, email, password } = req.body;
   try {
@@ -44,4 +44,41 @@ router.post("/signup", async (req, res) => {
   }
 });
 
+// 로그인 라우터
+router.post("/login", async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    let user = await User.findOne({ email });
+    if (!user) {
+      return res.status(400).json({ msg: "Invaild email" });
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res
+        .status(400)
+        .json({ msg: "Your email or password is incorrect. " });
+    }
+
+    const payload = {
+      user: {
+        id: user.id,
+      },
+    };
+
+    // jwt create 로그인 토큰 생성시간 1시간.
+    jwt.sign(
+      payload,
+      "your_jwt_secret_key",
+      { expiresIn: "1" },
+      (err, token) => {
+        if (err) throw err;
+        res.json({ token });
+      }
+    );
+  } catch (err: any) {
+    console.error(err.message);
+    res.status(500).send("Server error");
+  }
+});
 export default router;
