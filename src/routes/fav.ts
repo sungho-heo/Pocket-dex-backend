@@ -1,0 +1,12 @@
+import { Router } from "express";
+import { getFav, addFav, removeFav } from "../controllers/favController";
+import authMiddleware from "../middleware/authMiddleware";
+
+const router = Router();
+
+// router
+router.get("/", authMiddleware, getFav);
+router.post("/add", authMiddleware, addFav);
+router.delete("/remove", authMiddleware, removeFav);
+
+export default router;

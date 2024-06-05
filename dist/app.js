@@ -5,18 +5,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const morgan_1 = __importDefault(require("morgan"));
-const apiRouter_1 = __importDefault(require("./routes/apiRouter"));
+const cors_1 = __importDefault(require("cors"));
+require("dotenv/config");
+const db_1 = __importDefault(require("./config/db"));
+const auth_1 = __importDefault(require("./routes/auth"));
+const fav_1 = __importDefault(require("./routes/fav"));
 const app = (0, express_1.default)();
-const PORT = process.env.PORT || 3000;
-// server log http status code
-app.use((0, morgan_1.default)("dev"));
+(0, db_1.default)();
+// middleware
+app.use((0, cors_1.default)());
+app.use(express_1.default.json());
+app.use((0, morgan_1.default)("dev")); // Morgan 미들웨어 설정
 // router
-app.use("/api", apiRouter_1.default);
-// home
-app.get("/", (req, res) => {
-    res.send("hello world");
-});
-// server start
-app.listen(PORT, () => {
-    console.log(`✅ Server running: http://localhost:${PORT}`);
-});
+app.use("/api/auth", auth_1.default);
+app.use("/api/fav", fav_1.default);
+exports.default = app;
