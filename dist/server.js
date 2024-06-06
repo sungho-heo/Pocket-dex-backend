@@ -4,6 +4,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const app_1 = __importDefault(require("./app"));
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 4000;
 // server start
-app_1.default.listen(PORT, () => console.log(`Start Server http://localhost:{PORT}/`));
+app_1.default.listen(PORT, () => console.log(`Start Server http://localhost:${PORT}/`));
