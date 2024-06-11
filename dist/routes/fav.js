@@ -10,5 +10,5 @@ const router = (0, express_1.Router)();
 // router
 router.get("/", authMiddleware_1.default, favController_1.getFav);
 router.post("/add", authMiddleware_1.default, favController_1.addFav);
-router.delete("/remove", authMiddleware_1.default, favController_1.removeFav);
+router.delete("/remove/:pokemonName", authMiddleware_1.default, favController_1.removeFav);
 exports.default = router;
