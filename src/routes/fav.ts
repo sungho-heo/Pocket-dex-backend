@@ -7,6 +7,6 @@ const router = Router();
 // router
 router.get("/", authMiddleware, getFav);
 router.post("/add", authMiddleware, addFav);
-router.delete("/remove", authMiddleware, removeFav);
+router.delete("/remove/:pokemonName", authMiddleware, removeFav);
 
 export default router;

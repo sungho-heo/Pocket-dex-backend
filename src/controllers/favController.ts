@@ -34,7 +34,7 @@ export const addFav = async (req: AuthRequest, res: Response) => {
 };
 
 export const removeFav = async (req: AuthRequest, res: Response) => {
-  const { pokemonName } = req.body;
+  const { pokemonName } = req.params;
 
   try {
     const user = await User.findById(req.user.id);
