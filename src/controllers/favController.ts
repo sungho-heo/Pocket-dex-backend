@@ -23,9 +23,10 @@ export const addFav = async (req: AuthRequest, res: Response) => {
     if (!user) {
       return res.status(400).json({ message: "User not foind" });
     }
-
-    user.fav.push(pokemonName);
-    await user.save();
+    if (!user.fav.includes(pokemonName)) {
+      user.fav.push(pokemonName);
+      await user.save();
+    }
 
     res.status(200).json({ fav: user.fav });
   } catch (err: any) {
