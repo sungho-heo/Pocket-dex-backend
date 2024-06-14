@@ -16,7 +16,8 @@ export const getFav = async (req: AuthRequest, res: Response) => {
 };
 
 export const addFav = async (req: AuthRequest, res: Response) => {
-  const { pokemonName } = req.body;
+  const { pokemonName } = req.params;
+  console.log(pokemonName);
 
   try {
     const user = await User.findById(req.user.id);

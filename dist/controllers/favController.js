@@ -29,13 +29,16 @@ const getFav = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 exports.getFav = getFav;
 const addFav = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { pokemonName } = req.body;
+    console.log(pokemonName);
     try {
         const user = yield User_1.default.findById(req.user.id);
         if (!user) {
             return res.status(400).json({ message: "User not foind" });
         }
-        user.fav.push(pokemonName);
-        yield user.save();
+        if (!user.fav.includes(pokemonName)) {
+            user.fav.push(pokemonName);
+            yield user.save();
+        }
         res.status(200).json({ fav: user.fav });
     }
     catch (err) {
