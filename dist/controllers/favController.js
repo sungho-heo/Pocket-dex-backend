@@ -47,7 +47,7 @@ const addFav = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.addFav = addFav;
 const removeFav = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { pokemonName } = req.params;
+    const { pokemonName } = req.body;
     try {
         const user = yield User_1.default.findById(req.user.id);
         if (!user) {
