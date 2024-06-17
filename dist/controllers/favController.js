@@ -18,11 +18,14 @@ const getFav = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const user = yield User_1.default.findById(req.user.id);
         if (!user) {
+            console.log("User not found");
             return res.status(400).json({ message: "User not found" });
         }
+        console.log("User found:", user);
         res.status(200).json({ fav: user.fav });
     }
     catch (err) {
+        console.error("Error fetching favorites:", err);
         res.status(500).json({ message: err.message });
     }
 });
