@@ -20,9 +20,6 @@ const getFav = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         if (!user) {
             return res.status(400).json({ message: "User not found" });
         }
-        console.log(user.fav);
-        // 캐시 헤더 설정.
-        res.setHeader("Cache-Control", "no-store"); // 클라이언트에게 캐시하지 말라고 지시
         res.status(200).json({ fav: user.fav });
     }
     catch (err) {
