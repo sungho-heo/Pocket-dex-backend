@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "tsc && node dist/server.js"
+    "dev": "ts-node-dev --respawn --pretty --transpile-only src/server.ts"
   },
   "keywords": [],
   "author": "",
