@@ -39,7 +39,7 @@ describe("POST /api/auth/signup", () => {
     const res = await request(app).post("/api/auth/signup").send({
       nickname: "test2",
       email: "test2@test.com",
-      password: "password123",
+      password: "123",
     });
     expect(res.status).toBe(400);
     expect(res.body).toHaveProperty("message", "User already exists");
