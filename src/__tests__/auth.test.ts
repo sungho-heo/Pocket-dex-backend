@@ -74,10 +74,6 @@ describe("POST /api/auth/login", () => {
   });
 
   it("should not log in with incorrect password", async () => {
-    await request(app).post("/api/auth/login").send({
-      email: "test@test.com",
-      password: "123",
-    });
     const res = await request(app).post("/api/auth/login").send({
       email: "test@test.com",
       password: "1234",
