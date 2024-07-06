@@ -38,7 +38,7 @@ describe("POST /api/auth/signup", () => {
 
     const res = await request(app).post("/api/auth/signup").send({
       nickname: "test2",
-      email: "test2@test.com",
+      email: "test@test.com",
       password: "123",
     });
     expect(res.status).toBe(400);
@@ -47,11 +47,15 @@ describe("POST /api/auth/signup", () => {
 });
 
 describe("POST /api/auth/login", () => {
-  it("should log in an existing user and return 200 with a token", async () => {
-    await request(app).post("/api/auth/login").send({
+  beforeEach(async () => {
+    await request(app).post("/api/auth/signup").send({
+      nickname: "test1",
       email: "test@test.com",
       password: "123",
     });
+  });
+
+  it("should log in an existing user and return 200 with a token", async () => {
     const res = await request(app).post("/api/auth/login").send({
       email: "test@test.com",
       password: "123",
@@ -66,7 +70,7 @@ describe("POST /api/auth/login", () => {
       password: "123",
     });
     expect(res.status).toBe(400);
-    expect(res.body).toHaveProperty("message", "Invaild User");
+    expect(res.body).toHaveProperty("message", "Invalid User");
   });
 
   it("should not log in with incorrect password", async () => {
@@ -79,6 +83,6 @@ describe("POST /api/auth/login", () => {
       password: "1234",
     });
     expect(res.status).toBe(400);
-    expect(res.body).toHaveProperty("message", "Invaild Password");
+    expect(res.body).toHaveProperty("message", "Invalid password");
   });
 });
