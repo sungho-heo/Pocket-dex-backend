@@ -1,4 +1,5 @@
 import mongoose, { Document, Schema } from "mongoose";
+import bcrypt from "bcryptjs";
 
 // user type
 export interface UserType extends Document {
@@ -14,6 +15,11 @@ const UserSchema: Schema = new Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   fav: { type: [String], default: [] },
+});
+UserSchema.pre<UserType>("save", async function () {
+  if (this.isModified("password")) {
+    this.password = await bcrypt.hash(this.password, 5);
+  }
 });
 
 // 데이터베이스 모델생성.

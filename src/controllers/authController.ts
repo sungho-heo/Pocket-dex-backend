@@ -11,9 +11,8 @@ export const signup = async (req: Request, res: Response) => {
     if (existingUser) {
       return res.status(400).json({ message: "User already exists" });
     }
-    // 비밀번호 저장시 hash함수를 거쳐서 해시코드로 저장이 되게끔함.
-    const handlePassword = await bcrypt.hash(password, 10);
-    const user = new User({ nickname, email, password: handlePassword });
+    // hash password는 model단에서 처리.
+    const user = new User({ nickname, email, password: password });
     await user.save();
 
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET!, {
@@ -45,7 +44,11 @@ export const login = async (req: Request, res: Response) => {
       expiresIn: "1h",
     });
     res.status(200).json({ token });
+    return res.redirect("/");
   } catch (err: any) {
-    res.status(500).json({ message: err.message });
+    return res.status(500).json({ message: err.message });
   }
 };
+
+// logout
+export const logout = async (req: Request, res: Response) => {};
