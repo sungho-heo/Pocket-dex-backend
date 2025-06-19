@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "ts-node-dev --respawn --pretty --transpile-only src/server.ts",
+    "dev": "ts-node-dev  --respawn --pretty --transpile-only src/server.ts",
     "test": "jest --runInBand"
   },
   "keywords": [],
@@ -21,7 +21,8 @@
     "express": "^4.19.2",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.4.0",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "npm-check-updates": "^18.0.1"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
