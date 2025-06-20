@@ -49,9 +49,3 @@ export const login = async (req: Request, res: Response) => {
     return res.status(500).json({ message: err.message });
   }
 };
-
-// logout
-export const logout = async (req: Request, res: Response) => {
-  const { token } = req.body;
-  console.log(token);
-};
